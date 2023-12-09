@@ -1,0 +1,7 @@
+*.swp
+*.pyc
+.coverage
+htmlcov
+.DS_Store
+*.~lock*
+.env
