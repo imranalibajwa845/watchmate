@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+echo "started building"
+
+docker-compose build
+
+docker-compose run --rm --no-deps web ./manage.py migrate
+docker-compose run --rm --no-deps --service-ports --name web web "${@:1}"

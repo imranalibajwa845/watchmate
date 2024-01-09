@@ -1,21 +1,21 @@
 from django.shortcuts import render
-from watchlist.models import Movie
+from watchlist.models import WatchList
 from django.http import JsonResponse
-from watchlist.serializers import MovieSerilizer
+from watchlist.serializers import WatchListSerilizer
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
-class MovieListView(APIView):
+class WatchListView(APIView):
     def get(self, request):
-        movies = Movie.objects.all()
-        serializer = MovieSerilizer(movies, many=True)
+        movies = WatchList.objects.all()
+        serializer = WatchListSerilizer(movies, many=True)
         return Response(serializer.data)
 
     def post(self, request, pk):
-        serializer = MovieSerilizer(data=request.data)
+        serializer = WatchListSerilizer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -23,22 +23,22 @@ class MovieListView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class MovieDetailView(APIView):
+class WatchListDetailView(APIView):
     def get(self, request, pk):
         try:
-            movie = Movie.objects.get(id=pk)
-        except Movie.DoesNotExist:
+            movie = WatchList.objects.get(id=pk)
+        except WatchList.DoesNotExist:
             return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = MovieSerilizer(movie)
+        serializer = WatchListSerilizer(movie)
         return Response(serializer.data)
 
     def put(self, request, pk):
         try:
-            movie = Movie.objects.get(id=pk)
-        except Movie.DoesNotExist:
+            movie = WatchList.objects.get(id=pk)
+        except WatchList.DoesNotExist:
             return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = MovieSerilizer(movie, data=request.data)
+        serializer = WatchListSerilizer(movie, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -47,21 +47,21 @@ class MovieDetailView(APIView):
 
     def delete(self, request, pk):
         try:
-            movie = Movie.objects.get(id=pk)
-            movie.delete()
+            movie = WatchList.objects.get(id=pk)
+            WatchList.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except Movie.DoesNotExist:
+        except WatchList.DoesNotExist:
                 return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET', 'POST'])
 def movies_list(request):
     if request.method == 'GET':
-        movies = Movie.objects.all()
-        serializer = MovieSerilizer(movies, many=True)
+        movies = WatchList.objects.all()
+        serializer = WatchListSerilizer(movies, many=True)
         return Response(serializer.data)
     if request.method == 'POST':
-        serializer = MovieSerilizer(data=request.data)
+        serializer = WatchListSerilizer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -73,19 +73,19 @@ def movies_list(request):
 def movie_detail(request, pk):
     if request.method == 'GET':
         try:
-            movie = Movie.objects.get(id=pk)
-        except Movie.DoesNotExist:
+            movie = WatchList.objects.get(id=pk)
+        except WatchList.DoesNotExist:
             return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
-        serializer = MovieSerilizer(movie)
+        serializer = WatchListSerilizer(movie)
         return Response(serializer.data)
 
     if request.method == 'PUT':
         try:
-            movie = Movie.objects.get(id=pk)
-        except Movie.DoesNotExist:
+            movie = WatchList.objects.get(id=pk)
+        except WatchList.DoesNotExist:
             return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
 
-        serializer = MovieSerilizer(movie, data=request.data)
+        serializer = WatchListSerilizer(movie, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -94,8 +94,8 @@ def movie_detail(request, pk):
 
     if request.method == 'DELETE':
         try:
-            movie = Movie.objects.get(id=pk)
-            movie.delete()
+            movie = WatchList.objects.get(id=pk)
+            WatchList.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        except Movie.DoesNotExist:
+        except WatchList.DoesNotExist:
                 return Response({'Error': 'Movie not found'}, status=status.HTTP_404_NOT_FOUND)
