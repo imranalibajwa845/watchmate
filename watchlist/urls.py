@@ -1,7 +1,14 @@
-from watchlist.views import WatchListDetailView, WatchListView
+from watchlist.views import (
+    StreamView,
+    StreamDetailView,
+    WatchListView,
+    WatchListDetailView,
+)
 from django.urls import path, include
 
 urlpatterns = [
-    path('list/', WatchListView.as_view(), name='movie-list'),
+    path('watchlist/', WatchListView.as_view(), name='movie-list'),
     path('<int:pk>', WatchListDetailView.as_view(), name='movie-details'),
+    path('streams/', StreamView.as_view(), name='stream-list'),
+    path('<int:pk>', StreamDetailView.as_view(), name='stream-details'),
 ]

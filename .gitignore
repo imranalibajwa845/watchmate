@@ -5,3 +5,4 @@ htmlcov
 .DS_Store
 *.~lock*
 .env
+watchlist/__pycache__
