@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from watchlist.models import StreamPlatform, WatchList
 from django.http import JsonResponse
-
 from watchlist.serializers import StreamPlatformSerilizer, WatchListSerilizer
 from rest_framework import status
 from rest_framework.decorators import api_view
